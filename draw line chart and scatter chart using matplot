@@ -1,6 +1,7 @@
 #导入用到的包
 import matplotlib.pyplot as plt
 import pygal
+import numpy as py
 
 
 #最简单的折线图
