@@ -23,8 +23,10 @@ plt.show()
 #绘制散点图，其中点的颜色将随因变量y1的取值不同而发生变化
 x1 = list(range(1,10))
 y1 = [4,1,7,5,9,6,2,8,5]
-plt.scatter(x1, y1, c=y1, cmap=plt.cm.Reds)
+#合理改变s的大小制作出气泡图
+plt.scatter(x1, y1, c=y1, cmap=plt.cm.Reds, s=128)
 plt.axis([0,10,0,10])
+#改变坐标轴标号大小
 plt.tick_params(axis='both', labelsize=14)
 plt.xlabel("x1", fontsize=14)
 plt.ylabel("y1", fontsize=14)
