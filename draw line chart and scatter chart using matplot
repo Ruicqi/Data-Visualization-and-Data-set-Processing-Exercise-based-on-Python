@@ -1,0 +1,15 @@
+import matplotlib.pyplot as plt
+import pygal
+x = list(range(1,10))
+y = [4,1,7,5,9,6,2,8,5]
+
+plt.plot(x, y, c='red', linewidth=2)
+
+plt.scatter(x, y, c='blue')
+plt.axis([0,10,0,10])
+#设置刻度标记大小
+plt.tick_params(axis='both', labelsize=14)
+plt.xlabel("x", fontsize=14)
+plt.ylabel("y", fontsize=14)
+
+plt.show()
