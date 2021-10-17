@@ -76,9 +76,11 @@ plt.show()
 
 
 #利用matplot绘制条形图
+barwidth = 0.45
 y4 = np.random.rand(50)
 x4 = list(range(1,51))
-plt.bar(x4, y4, color='green', width=0.5, alpha=1)
+plt.bar(x4, y4, color='green', width=barwidth, alpha=1)
+#可选：plt.barh()，横向绘制
 plt.figure()
 
 
