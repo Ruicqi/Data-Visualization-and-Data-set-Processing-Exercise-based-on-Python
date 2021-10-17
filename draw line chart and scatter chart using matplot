@@ -81,3 +81,14 @@ x4 = list(range(1,51))
 plt.bar(x4, y4, color='green', width=0.5, alpha=1)
 plt.figure()
 
+
+#利用matplot绘制饼图
+labels = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6']
+sizes = [4, 2, 12, 60, 2, 9]
+#每一块饼图离开中心的距离
+explode = (0, 0, 0, 0.1, 0, 0)
+#autopct：控制饼图内百分比设置，如‘%1.2f%%’指保留二位小数 starttangle：起始绘制角度 counterclock：True为逆时针，否则为顺时针
+plt.pie(sizes, explode=explode, labels=labels, autopct='%1.2f%%', shadow=False, startangle=150)
+plt.title("Pie Figure")
+plt.show()  
+
