@@ -1,3 +1,4 @@
+#导入用到的包
 import matplotlib.pyplot as plt
 import pygal
 
