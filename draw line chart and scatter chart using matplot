@@ -74,3 +74,10 @@ plt.xlabel("x")
 plt.ylabel("y")
 plt.show()
 
+
+#利用matplot绘制条形图
+y4 = np.random.rand(50)
+x4 = list(range(1,51))
+plt.bar(x4, y4, color='green', width=0.5, alpha=1)
+plt.figure()
+
