@@ -1,15 +1,66 @@
 import matplotlib.pyplot as plt
 import pygal
+
+#最简单的折线图
 x = list(range(1,10))
 y = [4,1,7,5,9,6,2,8,5]
-
 plt.plot(x, y, c='red', linewidth=2)
 
+#利用matplot绘制散点图
 plt.scatter(x, y, c='blue')
 plt.axis([0,10,0,10])
 #设置刻度标记大小
 plt.tick_params(axis='both', labelsize=14)
 plt.xlabel("x", fontsize=14)
 plt.ylabel("y", fontsize=14)
+plt.show()
 
+#绘制散点图，其中点的颜色将随因变量y1的取值不同而发生变化
+x1 = list(range(1,10))
+y1 = [4,1,7,5,9,6,2,8,5]
+plt.scatter(x1, y1, c=y1, cmap=plt.cm.Reds)
+plt.axis([0,10,0,10])
+plt.tick_params(axis='both', labelsize=14)
+plt.xlabel("x1", fontsize=14)
+plt.ylabel("y1", fontsize=14)
+
+#利用matplot绘制折线图并填充中间的部分
+x2 = list(range(1,10))
+y2 = []
+for i in x2:
+    i = i**2
+    y2.append(i)
+plt.plot(x,y,c='red',linewidth=2)
+plt.plot(x2,y2,c='green',linewidth=2)
+#隐藏X轴，Y轴
+#plt.axes().get_xaxis().set_visible(False)
+#plt.axes().get_yaxis().set_visible(False)
+#填充两条曲线中间的部分
+plt.fill_between(x,y2,y,facecolor='blue',alpha=0.1)
+#保存图像，必须放在打印前，否则输出为空白！
+plt.savefig('fullfill_plot.svg', bbox_inches='tight')
+#设置图表宽度、高度、背景色,同时打印出来
+plt.figure(dpi=64, figsize=(10,6), edgecolor='black')
+
+#利用pygal绘制直方图
+x3 = [1,2,3,4,5,6,7,8,9]
+y3 = [1,3,5,7,9,7,5,3,1]
+#创建Bar实例
+hist = pygal.Bar()
+hist.title = "Rec with y3 and x3"
+hist.x_labels = x3
+hist.y_labels = y3
+hist.x_title = "x"
+hist.y_title = "y"
+#添加数据标签
+hist.add('num', x3)
+#保存文件，用浏览器打开即可
+hist.render_to_file('Rec_hist.svg')
+
+#利用pylot绘制直方图
+x4 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+y4 = [1, 3, 5, 7, 9, 7, 5, 3, 1]
+plt.hist(x4, y4, color='green')
+plt.xlabel("x")
+plt.ylabel("y")
 plt.show()
