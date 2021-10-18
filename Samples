@@ -105,3 +105,27 @@ plt.pie(sizes, explode=explode, labels=labels, autopct='%1.2f%%', shadow=False, 
 plt.title("Pie Figure")
 plt.show()  
 
+
+#利用matplot绘制雷达图
+values = [1, 2, 3, 4, 5]
+labels = ['L1', 'L2', 'L3', 'L4', 'L5']
+N = len(values)
+#linspace：返回范围为0~2pi的N个均匀分布。
+angels = np.linspace(0, 2*np.pi, N, endpoint=False)
+#concatenate：数组拼接,此例用不到
+#values = np.concatenate((values, [values[0]]))
+#angels = np.concatenate((angels, [angels[0]]))
+fig = plt.figure()
+#作为子图的一部分，将坐标轴添加其中
+ax = fig.add_subplot(1,1,1, polar=True)
+ax.fill(angels, values, alpha=0.25)
+#在不同位置添加标签
+ax.set_thetagrids(angels*180/np.pi, labels)
+#设置坐标轴范围
+ax.set_ylim(0,5)
+plt.title('Radio Figure')
+#添加网格线
+ax.grid(True)
+plt.show()
+
+
