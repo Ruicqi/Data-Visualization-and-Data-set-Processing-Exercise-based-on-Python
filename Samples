@@ -129,7 +129,7 @@ ax.grid(True)
 plt.show()
 
 
-#利用matplot绘制面积图
+#利用matplot绘制堆叠图
 x6 = list(range(1,10))
 y6 = []
 for i in x6:
