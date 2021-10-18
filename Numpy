@@ -1,0 +1,235 @@
+#导入需要的包
+import numpy as np
+
+-------------------------------------
+
+#建立一个数组
+array = np.array([[1+5j, 2], [3+6j, 4-2j]], dtype = complex)
+print(array)
+
+------------------------------------
+
+#生成序列
+a = np.arange(0,24,1)  
+print("a =",a)
+#打印维度数
+print (a.ndim)        # a只有一个维度
+# 调整其大小
+b = a.reshape(2,4,3)  # b拥有三个维度
+print("b =",b)
+print (b.ndim)
+c = np.array([[1,2,3],[4,5,6]])
+#打印c的各维度
+print(c.shape)
+#改变c的维度
+c.shape =  (3,2)  
+print (c)
+
+a = np.array([1,2,3,4,5], dtype = np.float64)
+#返回a所占字节大小
+print (a.itemsize)
+#返回a的相关信息
+print(a.flags)
+
+#产生一个未初始化的数组
+a = np.empty([3,2], dtype = int) 
+print (a)
+#产生一个零数组（1数组将zeros替换成ones即可）
+b = np.zeros((2,2), dtype = np.int16) 
+print(b)
+
+a = [1,2,3]
+#复制已有数组生成新数组，元组也可以用
+b = np.asarray(a)
+print("b=",b)
+#实现unicode到bytestring转换
+c =  b'Hello World'
+#以流的形式读入转化成asarray对象
+d = np.frombuffer(c, dtype =  'S1')
+print (d)
+
+# 使用 range 函数创建列表对象  
+list = range(5)
+#生成迭代器
+it = iter(list) 
+# 使用迭代器创建 ndarray 
+x = np.fromiter(it, dtype=float)
+print(x)
+
+#生成特定范围数组的两种方式
+a = np.arange(1,10,1)
+print("a=",a)
+b = np.linspace(1,10,10,endpoint=True)
+print("b=",b)
+
+-------------------------------------------------
+
+#切片
+a = np.arange(10)
+s = slice(2,9,2)   # 从索引 2 开始到索引 9 停止，间隔为2
+print (a[s])
+#切片的第二种方式
+b = a[2: 9: 2]
+print(b)
+#切片也可以用…
+a = np.array([[1,2,3],[3,4,5],[4,5,6]])  
+print (a[...,1])   # 第2列元素
+print (a[1,...])   # 第2行元素
+print (a[...,1:])  # 第2列及剩下的所有元素
+#多维数组使用,区分维度：
+a=np.arange(0,12)
+a.shape=(3,4)
+print(a)
+print(a[0:2,1:3])
+
+-----------------------------------------------------
+
+#numpy迭代数组
+a = np.arange(6).reshape(2,3)
+print ('原始数组是：')
+print (a)
+print ('\n')
+print ('迭代输出元素：')
+for x in np.nditer(a):
+    print (x, end=", " )
+print ('\n')
+#for x in np.nditer(a, order='F'):Fortran order，即是列序优先；
+#for x in np.nditer(a.T, order='C'):C order，即是行序优先；
+#如果两个数组a，b是可广播的，可以使用广播迭代：
+#for x,y in np.nditer([a,b]):  
+#    print ("%d:%d"  %  (x,y), end=", " )
+
+---------------------------------------------------------
+
+#flat迭代器
+a = np.arange(9).reshape(3,3) 
+print ('原始数组：')
+for row in a:
+    print (row)
+
+#对数组中每个元素都进行处理，可以使用flat属性，该属性是一个数组元素迭代器：
+print ('迭代后的数组：')
+for element in a.flat:
+    print (element)
+
+#flattern返回一个数组的拷贝，对拷贝进行操作不会影响原始数组
+print ('展开的数组：')
+print (a.flatten())
+print ('\n')
+ 
+print ('以 F 风格顺序展开的数组：')
+print (a.flatten(order = 'F'))
+
+#ravel() 展平的数组元素，顺序通常是"C风格"，返回的是数组视图（view，有点类似 C/C++引用reference的意味），修改会影响原始数组
+print ('调用 ravel 函数之后：')
+print (a.ravel())
+print ('\n')
+ 
+print ('以 F 风格顺序调用 ravel 函数之后：')
+print (a.ravel(order = 'F'))
+
+------------------------------------------------------
+
+#数组操作
+a = np.arange(12).reshape(3,4)
+ 
+print ('原数组：')
+print (a )
+print ('\n')
+#transpose 函数用于对换数组的维度
+print ('对换数组：')
+print (np.transpose(a))
+#.T求转置
+print ('转置数组：')
+print (a.T)
+#numpy.resize 函数返回指定大小的新数组。如果新数组大小大于原始大小，则包含原始数组中的元素的副本。
+print ('调用resize：')
+b = np.resize(a,(5,5))
+print (b)
+#numpy.append 函数在数组的末尾添加值
+a = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+print('a=',a)
+print ('沿轴 0 添加元素：')
+print (np.append(a, [[10, 11, 12]],axis = 0))
+print ('\n')
+#numpy.insert 函数在给定索引之前，沿给定轴在输入数组中插入值。
+a = np.array([[1,2],[3,4],[5,6]])
+print ('插入前数组：')
+print (a)
+print ('\n')
+print ('未传递 Axis 参数。 在插入之前输入数组会被展开。')
+print (np.insert(a,3,[11,12]))
+print ('\n')
+print ('传递了 Axis 参数。 会广播值数组来配输入数组。')
+print ('沿轴 0 广播：')
+print (np.insert(a,1,[11],axis = 0))
+print ('\n')
+print ('沿轴 1 广播：')
+print (np.insert(a,1,11,axis = 1))
+
+#numpy.delete 函数返回从输入数组中删除指定子数组的新数组。 与 insert() 函数的情况一样，如果未提供轴参数，则输入数组将展开。
+print ('删除前数组：')
+print (a)
+print ('沿轴 0 广播：')
+print (np.delete(a,1,axis = 0))
+
+#numpy.unique 函数用于去除数组中的重复元素。
+a = np.array([5,2,6,2,7,5,6,8,2,9])
+ 
+print ('原始数组：')
+print (a)
+print ('\n')
+ 
+print ('去重后数组：')
+u = np.unique(a)
+print (u)
+print ('\n')
+ 
+print ('新列表元素在旧列表元素中的位置：')
+u,indices = np.unique(a, return_index = True)
+print (indices)
+print ('\n')
+ 
+print ('旧列表元素在新列表中的位置：')
+u,indices = np.unique(a,return_inverse = True)
+print (u)
+print ('\n')
+ 
+print ('下标为：')
+print (indices)
+print ('\n')
+ 
+print ('使用下标重构原数组：')
+print (u[indices])
+print ('\n')
+ 
+print ('返回去重元素的重复数量：')
+u,indices = np.unique(a,return_counts = True)
+print (u)
+print (indices)
+
+#其他的数组操作用到再查，网址https://www.runoob.com/numpy/numpy-array-manipulation.html
+
+----------------------------------------------------------------------
+
+#位运算：
+#bitwise_and：对数组元素执行位与操作
+#bitwise_or：对数组元素执行位或操作
+#invert：按位取反
+#left_shift：向左移动二进制表示的位
+#right_shift：向右移动二进制表示的位
+print ('将 10 左移两位：')
+print (np.left_shift(10,2))
+print ('\n')
+ 
+print ('10 的二进制表示：')
+print (np.binary_repr(10, width = 8))
+print ('\n')
+ 
+print ('40 的二进制表示：')
+print (np.binary_repr(40, width = 8))
+#  '00001010' 中的两位移动到了左边，并在右边添加了两个 0。
+
+--------------------------------------------------------------
+
+#到Numpy字符串函数哩，明天继续吧~
