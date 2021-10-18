@@ -129,3 +129,22 @@ ax.grid(True)
 plt.show()
 
 
+#利用matplot绘制面积图
+x6 = list(range(1,10))
+y6 = []
+for i in x6:
+    i = i**2
+    y6.append(i)
+y66 = list(100*np.random.rand(9))
+labels = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9']
+#填充两条曲线中间的部分
+plt.stackplot(x6, y6, y66, labels=labels, colors=['blue', 'red'])
+plt.title('Area Figure')
+plt.legend()
+#保存图像，必须放在打印前，否则输出为空白！
+plt.savefig('fullfill_plot.svg', bbox_inches='tight')
+#设置图表宽度、高度、背景色,同时打印出来
+plt.figure(dpi=64, figsize=(10,6), edgecolor='black')
+plt.show()
+
+
