@@ -1,0 +1,140 @@
+#导入需要的包
+import pandas as pd
+import json
+
+--------------------------------------------------------------------
+
+#Pandas数据结构-Series
+#构造方法：pandas.Series( data, index(行标签), dtype, name, copy)
+a = ["Google", "Runoob", "Wiki"]
+#直接打印则索引为数字
+myvar = pd.Series(a,name="Series_name0")
+print(myvar)
+print('\n')
+#手动指定索引
+myvar = pd.Series(a, index=['x', 'y', 'z'], name="Series_name1")
+print(myvar)
+print('\n')
+
+#也可以使用 key/value 对象，类似字典来创建 Series
+a = {'x':"Google", 'y':"Runoob", 'z':"Wiki"}
+myvar = pd.Series(a, name="Series_name2")
+print(myvar)
+
+------------------------------------------------------------------
+
+#Pandas数据结构-DataFrame
+#构造方法：pandas.DataFrame( data, index(行标签), columns(列标签), dtype, copy)
+a = [['Google', 10], ['Runoob', 12], ['Wiki', 13]]
+my_df = pd.DataFrame(a, index=['x', 'y', 'z'], columns=['Site','Age'], dtype=float)
+print(my_df)
+print('\n')
+
+#也可以使用ndarrays构建,个人喜欢这种：
+a = {'Site':['Google', 'Runoob', 'Wiki'], 'Age':[10.0, 12.0, 13.0]}
+my_df = pd.DataFrame(a, index=['x', 'y', 'z'], dtype=float)
+print(my_df)
+print('\n')
+
+#也可以使用字典构建：
+a = [{'a': 1, 'b': 2},{'a': 5, 'b': 10, 'c': 20}]
+my_df = pd.DataFrame(a, index=['x', 'y'])
+print (my_df)
+print('\n')
+
+-----------------------------------------------------------------------
+
+#Pandas索引
+#初始化：
+a = {'Site':['Google', 'Runoob', 'Wiki'], 'Age':[10, 12, 13]}
+my_df = pd.DataFrame(a, index=['x', 'y', 'z'])
+print("原始Dataframe：")
+print(my_df)
+print('\n')
+
+#使用loc（基于行标签和列标签）返回一行,返回数据类型为Series：
+print("第一行数据为：")
+print(my_df.loc['x'])
+print('\n')
+
+#使用loc返回二行,返回数据类型为DataFrame：
+print("前二行数据为：")
+print(my_df.loc[['x', 'y']])
+print('\n')
+
+#对于列，可以直接打印。这种方法仅限于列，打印行会报错：
+print(my_df['Site'])
+print('\n')
+
+#使用iloc（基于默认的标号）返回行或列,返回数据类型为Series：
+#返回前二行，返回数据类型为DataFrame：
+print(my_df.iloc[0:2])
+print('\n')
+#返回第二列，返回数据类型为Series：
+print(my_df.iloc[:, 1])
+
+------------------------------------------------------------
+
+#Pandas导入数据-CSV格式
+my_df = pd.read_csv('grade_csv.csv')
+#打印出导入数据。to_string() 用于返回 DataFrame 类型的数据，如果不使用该函数，则输出结果为数据的前面 5 行和末尾 5 行，中间部分以 ... 代替。
+print("原始数据为：\n")
+print(my_df.to_string())
+#保存数据
+#my_df.to_json('grade_json.json')
+
+#Pandas导入数据-json格式，使用内嵌的json数据：
+#json保存的数据如下：
+#a = {
+#    "school_name": "ABC primary school",
+#    "class": "Year 1",
+#    "students": [
+#    {
+#        "id": "A001",
+#        "name": "Tom",
+#        "math": 60,
+#        "physics": 66,
+#        "chemistry": 61
+#    },
+#    {
+#        "id": "A002",
+#        "name": "James",
+#        "math": 89,
+#        "physics": 76,
+#        "chemistry": 51
+#    },
+#    {
+#        "id": "A003",
+#        "name": "Jenny",
+#        "math": 79,
+#        "physics": 90,
+#        "chemistry": 78
+#    }]
+#}
+
+my_df = pd.read_json('grade_json.json')
+print('原始数据为：')
+print(my_df.to_string())
+
+#用json_normalize() 方法将内嵌的数据完整的解析出来
+# 使用 Python JSON 模块载入数据
+with open('grade_json.json','r') as f:
+    my_df = json.loads(f.read())
+print(my_df)
+print('\n')
+# 展平数据
+df_nested_list = pd.json_normalize(my_df, record_path = ['students'])
+print(df_nested_list)
+print('\n')
+#显示结果还没有包含 school_name 和 class 元素，如果需要展示出来可以使用 meta 参数来显示这些元数据
+df_nested_list = pd.json_normalize(my_df, record_path = ['students'], meta=['school_name', 'class'])
+print(df_nested_list)
+-----------------------------------------------------------
+
+#Pandas数据处理：
+#展示出前五行作为概览，若要读取后五行，使用.tail()
+my_df.head(5)
+
+#.info：返回数据集的信息
+my_df.info()
+#未完待续
