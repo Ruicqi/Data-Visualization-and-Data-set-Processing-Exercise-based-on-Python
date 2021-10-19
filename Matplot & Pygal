@@ -3,12 +3,14 @@ import matplotlib.pyplot as plt
 import pygal
 import numpy as py
 
+-----------------------------------------
 
 #最简单的折线图
 x = list(range(1,10))
 y = [4,1,7,5,9,6,2,8,5]
 plt.plot(x, y, c='red', linewidth=2)
 
+-----------------------------------------
 
 #利用matplot绘制散点图
 plt.scatter(x, y, c='blue')
@@ -19,6 +21,7 @@ plt.xlabel("x", fontsize=14)
 plt.ylabel("y", fontsize=14)
 plt.show()
 
+----------------------------------------------
 
 #绘制散点图，其中点的颜色将随因变量y1的取值不同而发生变化
 x1 = list(range(1,10))
@@ -31,6 +34,7 @@ plt.tick_params(axis='both', labelsize=14)
 plt.xlabel("x1", fontsize=14)
 plt.ylabel("y1", fontsize=14)
 
+-----------------------------------------------
 
 #利用matplot绘制折线图并填充中间的部分
 x2 = list(range(1,10))
@@ -50,6 +54,7 @@ plt.savefig('fullfill_plot.svg', bbox_inches='tight')
 #设置图表宽度、高度、背景色,同时打印出来
 plt.figure(dpi=64, figsize=(10,6), edgecolor='black')
 
+--------------------------------------------------
 
 #利用pygal绘制直方图
 x3 = [1,2,3,4,5,6,7,8,9]
@@ -66,6 +71,7 @@ hist.add('num', x3)
 #保存文件，用浏览器打开即可
 hist.render_to_file('Rec_hist.svg')
 
+-----------------------------------------------
 
 #利用pylot绘制直方图
 #生成1000个标准正态分布
@@ -76,6 +82,7 @@ plt.xlabel("x")
 plt.ylabel("y")
 plt.show()
 
+-------------------------------------------------
 
 #利用matplot绘制条形图
 y4 = np.random.rand(10)
@@ -94,6 +101,7 @@ plt.ylabel('y')
 plt.legend()
 plt.figure()
 
+-------------------------------------------------
 
 #利用matplot绘制饼图
 labels = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6']
@@ -105,6 +113,7 @@ plt.pie(sizes, explode=explode, labels=labels, autopct='%1.2f%%', shadow=False, 
 plt.title("Pie Figure")
 plt.show()  
 
+------------------------------------------------------
 
 #利用matplot绘制雷达图
 values = [1, 2, 3, 4, 5]
@@ -128,6 +137,7 @@ plt.title('Radio Figure')
 ax.grid(True)
 plt.show()
 
+-------------------------------------------
 
 #利用matplot绘制堆叠图
 x6 = list(range(1,10))
