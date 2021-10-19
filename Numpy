@@ -232,4 +232,368 @@ print (np.binary_repr(40, width = 8))
 
 --------------------------------------------------------------
 
-#到Numpy字符串函数哩，明天继续吧~
+#字符串操作：
+#numpy.char.add() 
+#依次对两个数组的元素进行字符串连接。
+print('字符串连接：')
+print(np.char.add('hello', ' world'))
+print('\n')
+
+#numpy.char.center() 
+#用于将字符串居中，并使用指定字符在左侧和右侧进行填充。
+# np.char.center(str , width,fillchar) ：
+# str: 字符串，width: 长度，fillchar: 填充字符
+print('字符串居中：')
+print (np.char.center('hello world', 21, '-'))
+print('\n')
+
+#numpy.char.capitalize() 
+#将字符串的第一个字母转换为大写
+print('将第一个字母变为大写：')
+print(np.char.capitalize('hello world'))
+print('\n')
+
+#numpy.char.title() 
+#将字符串的每个单词的第一个字母转换为大写
+#numpy.char.lower()
+#将数组的每个元素转换为小写。它对每个元素调用 str.lower。
+#numpy.char.upper()
+#将数组的每个元素转换为大写。它对每个元素调用 str.upper。
+#numpy.char.split()
+#通过指定分隔符对字符串进行分割，并返回数组。
+print('分割字符串：')
+print(np.char.split('hello.world', sep='.'))
+print('\n')
+
+#numpy.char.splitlines()
+#以换行符作为分隔符来分割字符串，并返回数组。
+#等同于print(np.char.split('hello\nworld', sep='\n'))。\n，\r，\r\n 都可用作换行符
+
+#numpy.char.strip()
+#用于移除开头或结尾处的特定字符。
+print('移除前面的特定符he：')
+print(np.char.strip('hello world',chars='he'))
+print('移除后面的特定字符ld：')
+print(np.char.strip('hello world',chars='ld'))
+#以列表形式传入参数，返回值也为列表
+#print(np.char.strip('hello world',chars=['he', 'ld']))
+print('\n')
+
+#numpy.char.join()
+#通过指定分隔符来连接数组中的元素或字符串。
+print('指定分隔符‘-’来连接数组中的元素或字符串：')
+print(np.char.join(sep='-', seq=['helloworld']))
+print('\n')
+
+#numpy.char.replace()
+#使用新字符串替换字符串中的所有子字符串。
+print("使用‘cosmos'替换world：")
+print(np.char.replace('hello world' ,'world', 'cosmos'))
+print('\n')
+
+#numpy.char.encode()
+#对数组中的每个元素调用 str.encode 函数。 默认编码是 utf-8，可以使用标准 Python 库中的编解码器。
+print("对数组进行编码：")
+#cp500为一种编码格式
+print(np.char.encode('hello world', encoding='cp500'))
+print('\n')
+
+#numpy.char.decode()
+#对编码的元素进行 str.decode() 解码。
+#cp500为一种编码格式
+a = np.char.encode('hello world', 'cp500')
+print("原始编码：", a)
+print("对数组进行解码：",np.char.decode(a, encoding='cp500'))
+print('\n')
+
+----------------------------------------------
+
+#数学函数：
+#三角函数。
+print('cos(pi)的值为：', np.cos(np.pi))
+print('通过 numpy.degrees() 函数将弧度转换为角度：', np.degrees(np.cos(np.pi)))
+print('\n')
+
+#numpy.around()
+#返回指定数字的四舍五入值。decimals：指定保留的小数位数
+print('3.48四舍五入保留小数点后一位的值为：', np.around(3.48, decimals=1))
+print('\n')
+
+#numpy.floor()
+#向下取整。
+print('3.68向下取整的值为：', np.floor(3.68))
+print('\n')
+#numpy.ceil()向上取整。
+
+#numpy.add()，numpy.subtract()，numpy.multiply() 和 numpy.divide()
+#数组必须具有相同的形状或符合数组广播规则
+
+#numpy.reciprocal()
+#返回参数逐元素的倒数
+a = [2,1,0.5,0.25,0.125]
+print("原始数组：", a)
+print("取倒数后：", np.reciprocal(a))
+print('\n')
+
+#numpy.power()
+#将第一个输入数组中的元素作为底数，计算它与第二个输入数组中相应元素的幂。
+a = [1, 10, 100, 1000]
+b = [4, 3, 2, 1]
+print("原始数组：", a, '\n', b)
+print("power()后：", np.power(a, b))
+print('\n')
+
+#numpy.mod()
+#计算输入数组中相应元素的相除后的余数。
+#函数 numpy.remainder() 也产生相同的结果。
+a = [1, 10, 100, 1000]
+b = [4, 3, 2, 1]
+print("原始数组：", a, '\n', b)
+print("mod()后：", np.mod(a, b))
+
+-------------------------------------------------------
+
+#统计函数：
+#numpy.amin()  numpy.amax()
+#numpy.amin() 用于计算数组中的元素沿指定轴的最小值。
+#numpy.amax() 用于计算数组中的元素沿指定轴的最大值。
+a = np.array([[1, 5, 8], [2, 3, 7], [4, 6, 9]], dtype = float)
+print('原始数组为：', a)
+print('原始数组沿轴0最小值为：', np.amin(a, axis=0))
+print('原始数组沿轴1最大值为：', np.amax(a, axis=1))
+print('\n')
+
+#numpy.ptp()
+#计算数组中元素最大值与最小值的差,也可以指定轴。
+print('数组中元素最大值与最小值的差为：', np.ptp(a))
+print('\n')
+
+#numpy.percentile()
+#小于这个值的观察值的百分比。参数q：要计算的百分位数，在 0 ~ 100 之间。可以指定轴。
+print('数组中位数为：', np.percentile(a, q = 50))
+print('\n')
+
+#numpy.median()
+#用于计算数组 a 中元素的中位数（中值），可以指定轴。
+#numpy.mean()
+#返回数组中元素的算术平均值，可以指定轴。
+#numpy.average()
+#传入两个数组，第一个数组根据在另一个数组中给出的各自的权重计算数组中元素的加权平均值。可以指定轴。
+#np.std()
+#计算标准差
+#np.var
+#计算方差
+
+-----------------------------------------------------
+
+#排序、条件刷选函数
+#numpy.sort()
+#返回输入数组的排序副本。
+#其中：kind: 默认为'quicksort'（快速排序） order: 如果数组包含字段，则是要排序的字段
+a = np.array([[1, 8, 5], [7, 3, 2], [4, 6, 9]], dtype = float)
+print('原始数组为：', a)
+b = np.sort(a, kind='quicksort')
+print('对原始数组进行快速排序：', b)
+a = np.array([("bcd", 21), ("cde", 25), ("abc", 17), ("acd", 27)], dtype = [('name',  'S10'),('age',  int)])  
+print ('原始数组为：')
+print (a)
+print ('按 name 排序：')
+print (np.sort(a, order =  'name'))
+print('\n')
+
+#numpy.argsort()
+#返回的是数组值从小到大的索引值
+a = np.array([1, 3, 4, 2])
+print ('原始数组为：')
+print (a)
+b = np.argsort(a)
+print ('数组值从小到大的索引值为：')
+print (b)
+print ('重构数组为：')
+print (a[b])
+print('\n')
+
+#numpy.argmax() 和 numpy.argmin()函数分别沿给定轴返回最大和最小元素的索引。
+
+#numpy.lexsort()
+#对多个序列进行排序。把它想象成对电子表格进行排序，每一列代表一个序列，排序时优先照顾靠后的列。
+a = ['cde', 'abc', 'efg', 'bcd']
+b = [47, 25, 32, 25]
+print('原始序列为：')
+print('a=', a, '\n', 'b=', b)
+c = np.lexsort((a, b))
+print('优先以b排序，b相同则比较a。调用lexsort()后的索引为：')
+print(c)
+print('利用产生的序列还原排序：')
+print([a[i]  +  ", "  + str(b[i])  for i in c])
+print('\n')
+
+#numpy.msort 
+#数组按第一个轴排序，返回排序后的数组副本。np.msort(a) 相等于 np.sort(a, axis=0)
+#numpy.sort_complex 
+#对复数按照先实部后虚部的顺序进行排序。
+
+#numpy.partition 
+#指定一个数，对数组进行分区。
+a = np.array([6, 5, 3, 4, 1, 0])
+print('原始序列为：', a)
+#将数组 a 中所有元素（包括重复元素）从小到大排列，2 表示的是排序数组索引为 2 的数字
+#比该数字小的排在该数字前面，比该数字大的排在该数字的后面。放在其后或其前的数组是无序的。
+b = np.partition(a, 2)
+print('b=', b)
+#小于1的在前面,大于1的在后面，1和3之间的在中间。放在其后或其前的数组是无序的
+c = np.partition(a, (1, 4))
+print('c=', c)
+print('\n')
+
+#numpy.argpartition
+#通过关键字 kind 指定算法沿着指定轴对数组进行分区。返回的是重组后数据的索引数组。
+#找到数组的第 3 小（index = 2）的值和第 2 大（index = -2）的值
+#arr[np.argpartition(arr, 2)[2]]
+#arr[np.argpartition(arr, -2)[-2]]
+
+#numpy.nonzero()
+#返回输入数组中非零元素的索引。
+#numpy.where()
+#返回输入数组中满足给定条件的元素的索引。括号内写布尔表达式。
+
+#numpy.extract()
+#根据某个条件从数组中抽取元素，返回满条件的元素。
+a = np.array([1,4,2,3,5,6])
+print('原始序列为：')
+print(a)
+b = np.mod(a,2) == 0
+print('a中为偶数的元素为：')
+print(np.extract(b, a))
+
+--------------------------------------------------
+
+#大小端转换
+a = np.array([1, 256, 6320], dtype = np.int16)  
+print ('原始数组是：')
+print (a)
+print ('以十六进制表示内存中的数据：')
+print (map(hex,a))
+# byteswap() 函数通过传入 true 来原地交换 
+print ('大小端转换后的输出为：')
+print (a.byteswap(True))
+print ('十六进制形式：')
+print (map(hex,a))
+
+-----------------------------------------------------
+
+#副本是一个数据的完整的拷贝，如果我们对副本进行修改，它不会影响到原始数据，物理内存不在同一位置。
+#视图是数据的一个别称或引用，通过该别称或引用亦便可访问、操作原有数据，但原有数据不会产生拷贝。如果我们对视图进行修改，它会影响到原始数据，物理内存在同一位置。
+#视图一般发生在：
+#1、numpy 的切片操作返回原数据的视图。
+#2、调用 ndarray 的 view() 函数产生一个视图。ndarray.view() 方法会创建一个新的数组对象，该方法创建的新数组的维数变化不会改变原始数据的维数,
+#但是对其进行修改，它会影响到原始数据
+#副本一般发生在：
+#Python 序列的切片操作，调用deepCopy()函数。
+#调用 ndarray 的 copy() 函数产生一个副本。
+a = np.array([1, 2, 3, 4, 5, 6])
+b = a
+print('原始数组a=',a)
+print('令数组b = a，打印数组b=',b)
+b.shape = 3, 2
+print('修改维数后的b为：',b)
+print('此时数组a为：',a)
+print('\n')
+
+#使用.view()方法
+a = np.array([1, 2, 3, 4, 5, 6])
+print('原始数组a=', a)
+b = a.view()
+print('令数组b = a.view()，打印数组b=',b)
+b[0] = 7
+print('此时数组a=', a)
+print('\n')
+
+
+#使用切片创建视图修改数据会影响到原始数组
+a = np.array([1, 2, 3, 4, 5, 6])
+print('原始数组a=', a)
+b = a[3:]
+print('b=', b)
+b[0] = 7
+print('此时a=', a)
+
+#ndarray.copy() 函数创建一个副本。 对副本数据进行修改，不会影响到原始数据
+
+----------------------------------------------------------------
+
+#Numpy矩形库
+#转置矩阵，arr.T
+#numpy.matlib.empty()
+#返回一个新的矩阵，填充随机数据
+#numpy.matlib.zeros()
+#返回一个零矩阵
+#numpy.matlib.ones()
+#返回一个1矩阵
+#numpy.matlib.eye()
+#返回一个矩阵，对角线元素为 1，其他位置为零。
+#参数列表：n: 返回矩阵的行数 M: 返回矩阵的列数，默认为 n k: 对角线的索引 dtype: 数据类型
+print('输出一个对角线元素为1的矩阵：')
+print(np.matlib.eye(n =  3, M =  4, k =  1, dtype =  float))
+print('\n')
+
+#numpy.matlib.identity()
+#返回给定大小的单位矩阵。
+#numpy.matlib.rand(
+#创建一个给定大小的矩阵，数据是随机填充的。
+
+------------------------------------------------------------
+
+#Numpy线性代数库
+#以下内容基于线性代数相关知识。
+#numpy.dot()
+#对于两个一维的数组，计算的是这两个数组对应下标元素的乘积和(数学上称之为内积)
+#numpy.vdot()
+#返回两个向量的点积。如果第一个参数是复数，那么它的共轭复数会用于计算。如果参数是多维数组，它会被展开。
+#numpy.inner()
+#返回一维数组的向量内积。对于更高的维度，它返回最后一个轴上的和的乘积。
+#numpy.matmul
+#返回两个数组的矩阵乘积。 虽然它返回二维数组的正常乘积，但如果任一参数的维数大于2，则将其视为存在于最后两个索引的矩阵的栈，并进行相应广播。
+#numpy.linalg.det()
+#计算输入矩阵的行列式。
+#numpy.linalg.solve()
+#给出了矩阵形式的线性方程的解。
+#numpy.linalg.inv()
+#计算矩阵的乘法逆矩阵。
+
+---------------------------------------------------------
+
+#Numpy IO
+#numpy.save()
+#将数组保存到以 .npy 为扩展名的文件中。
+#参数说明：file：要保存的文件，扩展名为 .npy，如果文件路径末尾没有扩展名 .npy，该扩展名会被自动加上。 arr: 要保存的数组
+#allow_pickle: 可选，布尔值，允许使用 Python pickles 保存对象数组，Python 中的 pickle 用于在保存到磁盘文件或从磁盘文件读取之前，对对象进行序列化和反序列化。
+#fix_imports: 可选，为了方便 Pyhton2 中读取 Python3 保存的数据。
+#numpy.save(file, arr, allow_pickle=True, fix_imports=True)
+
+#numpy.savez()
+#将多个数组保存到以 npz 为扩展名的文件中。
+a = np.array([[1,2,3],[4,5,6]])
+b = np.arange(0, 1, 0.1)
+c = np.sin(b)
+# c 使用了关键字参数 sin_array
+np.savez("runoob.npz", a, b, sin_array = c)
+r = np.load("runoob.npz")  
+print(r.files) # 查看各个数组名称
+print(r["arr_0"]) # 数组 a
+print(r["arr_1"]) # 数组 b
+print(r["sin_array"]) # 数组 c
+print('\n')
+
+#savetxt()
+#以简单的文本文件格式存储数据，对应的使用 loadtxt() 函数来获取数据。
+a=np.arange(0,10,0.5).reshape(4,-1)
+# 改为保存为整数，以逗号分隔
+np.savetxt("out.txt",a,fmt="%d",delimiter=",")
+# load 时也要指定为逗号分隔
+b = np.loadtxt("out.txt",delimiter=",")
+print(b)
+
+--------------------------------------------------------------
+
+#Numpy matplot部分见matplot部分
