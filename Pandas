@@ -137,4 +137,135 @@ my_df.head(5)
 
 #.info：返回数据集的信息
 my_df.info()
-#未完待续
+
+------------------------------------------------
+
+#Pandas导入数据-JSON格式，使用内嵌的json数据：
+#json保存的数据如下：
+#a = {
+#    "school_name": "ABC primary school",
+#    "class": "Year 1",
+#    "students": [
+#    {
+#        "id": "A001",
+#        "name": "Tom",
+#        "math": 60,
+#        "physics": 66,
+#        "chemistry": 61
+#    },
+#    {
+#        "id": "A002",
+#        "name": "James",
+#        "math": 89,
+#        "physics": 76,
+#        "chemistry": 51
+#    },
+#    {
+#        "id": "A003",
+#        "name": "Jenny",
+#        "math": 79,
+#        "physics": 90,
+#        "chemistry": 78
+#    }]
+#}
+
+my_df = pd.read_json('grade_json.json')
+print('原始数据为：')
+print(my_df.to_string())
+
+#用json_normalize() 方法将内嵌的数据完整的解析出来
+# 使用 Python JSON 模块载入数据
+with open('grade_json.json','r') as f:
+    my_df = json.loads(f.read())
+print(my_df)
+print('\n')
+# 展平数据
+df_nested_list = pd.json_normalize(my_df, record_path = ['students'])
+print(df_nested_list)
+print('\n')
+#显示结果还没有包含 school_name 和 class 元素，如果需要展示出来可以使用 meta 参数来显示这些元数据
+df_nested_list = pd.json_normalize(my_df, record_path = ['students'], meta=['school_name', 'class'])
+print(df_nested_list)
+
+--------------------------------------------
+
+#Pandas数据清洗
+#导入数据集
+my_df = pd.read_csv('property-data.csv')
+my_df.head()
+
+#通过isnull()判断各个单元格是否为空。
+print(my_df.isnull())
+
+#删除包含空数据的行。默认情况下，dropna() 方法返回一个新的 DataFrame，不会修改源数据。
+new_df = my_df.dropna()
+print(new_df.to_string())
+
+#也可以移除指定列有空值的行：
+my_df.dropna(subset=['ST_NUM'], inplace = True)
+print(my_df.to_string())
+
+#用fillna()方法来替换一些空字段：
+my_df.fillna(12345, inplace = True)
+print(my_df.to_string())
+
+#Pandas使用 mean()、median() 和 mode() 方法计算列的均值、中值和众数。
+a = my_df["ST_NUM"].mean()
+my_df["ST_NUM"].fillna(a, inplace = True)
+print(my_df.to_string())
+
+#可以通过包含空单元格的行，或者将列中的所有单元格转换为相同格式的数据。
+#格式化日期：
+# 第三个日期格式错误
+data = {
+  "Date": ['2020/12/01', '2020/12/02' , '20201226'],
+  "duration": [50, 40, 45]
+}
+df = pd.DataFrame(data, index = ["day1", "day2", "day3"])
+print('原始格式：', df.to_string())
+df['Date'] = pd.to_datetime(df['Date'])
+print('格式化日期后：', df.to_string())
+
+#我们可以通过iloc()或者loc()索引对错误的数据进行替换或移除。
+#也可以设置条件语句：
+person = {
+  "name": ['Google', 'Runoob' , 'Taobao'],
+  "age": [50, 200, 12345]    
+}
+df = pd.DataFrame(person)
+print('原始数据：', '\n', df)
+for x in df.index:
+  if df.loc[x, "age"] > 100:
+    df.loc[x, "age"] = 100
+
+print('修正后数据：', '\n', df.to_string())
+
+#也可以将错误数据所在的行删除：
+person = {
+  "name": ['Google', 'Runoob' , 'Taobao'],
+  "age": [50, 200, 12345]    
+}
+df = pd.DataFrame(person)
+for x in df.index:
+  if df.loc[x, "age"] > 120:
+    df.drop(x, inplace = True)
+
+print('删除错误数据所在行后：', '\n', df.to_string())
+
+-------------------------------------------
+
+#清洗重复数据
+#使用duplicated() 和 drop_duplicates() 
+#如果对应的数据是重复的，duplicated() 会返回 True，否则返回 False。
+person = {
+  "name": ['Google', 'Runoob', 'Runoob', 'Taobao'],
+  "age": [50, 40, 40, 23]  
+}
+df = pd.DataFrame(person)
+print('原始数据：', '\n', df)
+print('使用duplicated()方法后输出:')
+print(df.duplicated())
+#删除重复数据，可以直接使用drop_duplicates()方法。
+print('使用drop_duplicates()方法后输出:')
+print(df.drop_duplicates())
+
