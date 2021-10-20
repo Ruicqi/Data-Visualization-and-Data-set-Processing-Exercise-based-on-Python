@@ -1,0 +1,74 @@
+#以下为日常练习部分
+
+#导入用到的包
+import matplotlib.pyplot as plt
+from matplotlib.image import imread
+import pygal
+import numpy as np
+import cv2
+
+
+#生成一个HELLO散点图
+
+#rseed为生成随机数的种子
+rseed = 1024
+#生成随机点二维坐标的数量为4*N
+N = 1000
+
+#创建一个画布
+plt.figure(figsize=(6,6), dpi=80)
+fig = plt.figure()
+#作为子图的一部分，将坐标轴添加其中
+ax = fig.add_subplot(1,1,1)
+#隐藏坐标轴
+plt.axis('off')
+#生成一个红色的‘HELLO’图形
+ax.text(0.1, 0.4, 'HELLO', size=85, color='red')
+#保存文件
+plt.savefig('HELLO.jpg' )
+#打印图形
+plt.show()
+
+#通过存储-读取操作将图片转为矩阵
+my_png = np.array(imread('HELLO.jpg'), dtype=np.int16)
+#打印导入图片矩阵的大小
+print('导入图片大小为：', my_png.shape)
+#计算得到灰度图
+grey_png = my_png[:, :, 0] * 0.299 + my_png[:, :, 1] * 0.587 + my_png[:, :, 2] * 0.114
+#打印灰度矩阵
+print('转换来的灰度矩阵：\n', grey_png)
+#打印灰度图
+print('打印灰度图：')
+plt.axis('off')
+plt.imshow(grey_png, cmap = plt.cm.gray)
+
+#灰度图的二值化
+avr = np.mean(grey_png)
+data_rows = grey_png.shape[0]
+data_cols = grey_png.shape[1]
+for i in range(data_cols):
+    for j in range(data_rows):
+        
+        if(grey_png[j, i] >= avr):
+            grey_png[j, i] = 255
+        else:
+            grey_png[j, i] = 0
+            
+
+#灰度图的(0,1)归一化
+maxcols = grey_png.max(axis = 0)
+mincols = grey_png.min(axis = 0)
+data_rows = grey_png.shape[0]
+data_cols = grey_png.shape[1]
+t = np.empty((data_rows, data_cols))
+for i in range(data_cols):
+    t[:,i] = (grey_png[:,i] - mincols[i])/(maxcols[i] - mincols[i])
+
+
+#产生1000个随机坐标,rseed为生成随机数的种子
+#rng = np.random.RandomState(rseed)
+#生成二维随机坐标
+#random = rng.rand(4*N, 2)
+    
+#print(random)
+#plt.scatter(random)
